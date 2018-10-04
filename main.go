@@ -1,12 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 	"time"
 )
 
@@ -43,10 +41,8 @@ func main() {
 	go reloadConfig(&c)
 
 	for {
-		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("Enter text: ")
-		text, _ := reader.ReadString('\n')
-		fmt.Println(text)
+		time.Sleep(10 * time.Second)
+
 		fmt.Print(c)
 	}
 
