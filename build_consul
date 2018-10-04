@@ -1,0 +1,13 @@
+#!/bin/bash
+
+docker run -p 8080:8500 -p 8081:8300 -d --name=dev-consul -e CONSUL_BIND_INTERFACE=eth0 consul > /dev/null
+
+container_ip=$(docker inspect dev-consul | jq -r .[0].NetworkSettings.IPAddress)
+
+
+
+docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=$container_ip > /dev/null
+docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=$container_ip > /dev/null
+docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=$container_ip > /dev/null
+
+curl -s  http://127.0.0.1:8080/v1/agent/members | jq -r .[].Name
