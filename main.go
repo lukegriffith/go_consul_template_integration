@@ -9,17 +9,18 @@ import (
 )
 
 type config struct {
-	Name string `json:"name"`
+	Servers []string `json:"memcache_servers"`
 }
+
+
 
 func reloadConfig(c *config) {
 
 	for {
-
-		content, err := ioutil.ReadFile("test_config")
+		content, err := ioutil.ReadFile("/app/test_config")
 
 		if err != nil {
-			log.Panic("unable to find template file")
+			log.Panic("unable to find config file")
 		}
 
 		var data config
@@ -38,12 +39,16 @@ func main() {
 
 	c := config{}
 
+	fmt.Println("started.")
+
 	go reloadConfig(&c)
 
-	for {
-		time.Sleep(10 * time.Second)
+	fmt.Println("loaded")
 
-		fmt.Print(c)
+	for {
+		time.Sleep(5 * time.Second)
+
+		fmt.Println(c)
 	}
 
 }
